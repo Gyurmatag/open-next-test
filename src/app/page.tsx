@@ -1,15 +1,12 @@
 import { TodoList } from '@/components/TodoList';
-import { drizzle } from "drizzle-orm/d1";
 import { todos } from "@/db/schema";
-import { getEnv } from '@/utils/env';
+import {db} from "../../db";
 
 export const dynamic = 'force-dynamic';
 
 export default async function TodoApp() {
-    const env = await getEnv();
-    const db = drizzle(env.DB);
 
-    const todosData = await db.select().from(todos).all();
+    const todosData = await db.select().from(todos);
 
     return (
         <div
