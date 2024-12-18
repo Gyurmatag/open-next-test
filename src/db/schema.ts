@@ -1,7 +1,7 @@
-import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
+import { pgTable, serial, text, boolean } from 'drizzle-orm/pg-core';
 
-export const todos = sqliteTable('todos', {
-    id: integer('id').primaryKey(),
+export const todos = pgTable('todos', {
+    id: serial('id').primaryKey(),
     text: text('text').notNull(),
-    completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
+    completed: boolean('completed').notNull().default(false),
 });
