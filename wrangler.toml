@@ -14,3 +14,12 @@ assets = { directory = ".worker-next/assets", binding = "ASSETS" }
 [[kv_namespaces]]
 binding = "NEXT_CACHE_WORKERS_KV"
 id = "84f267ef2ea64160a4bc1a8e891759a0"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "open-next-test-db"
+database_id = "8b199466-a72e-401a-bf2f-19ee3c02b357"
+migrations_dir = "./src/db/migrations"
+
+[observability.logs]
+enabled = true

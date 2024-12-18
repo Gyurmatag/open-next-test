@@ -1,15 +1,36 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
-import { useTodos, Todo } from '@/hooks/useTodos';
 import { TodoItem } from './TodoItem';
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { PlusCircle } from 'lucide-react';
+import {todos} from "@/db/schema";
 
-export function TodoList() {
-    const { todos, addTodo, toggleTodo, deleteTodo } = useTodos();
-    const [newTodo, setNewTodo] = useState('');
+type Todo = typeof todos.$inferSelect
+
+type TodoListProps = {
+    initialTodos: Todo[];
+};
+
+export function TodoList({ initialTodos }: TodoListProps) {
+    const [todos, setTodos] = useState<Todo[]>(initialTodos || []);
+    const [newTodo, setNewTodo] = useState<string>('');
+
+    const addTodo = (text: string) => {
+        const newTodo: Todo = { id: Date.now(), text, completed: false };
+        setTodos([...todos, newTodo]);
+    };
+
+    const toggleTodo = (id: number) => {
+        setTodos(todos.map(todo => (
+            todo.id === id ? { ...todo, completed: !todo.completed } : todo
+        )));
+    };
+
+    const deleteTodo = (id: number) => {
+        setTodos(todos.filter(todo => todo.id !== id));
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,4 +68,3 @@ export function TodoList() {
         </>
     );
 }
-
